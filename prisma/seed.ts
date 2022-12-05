@@ -1,20 +1,19 @@
-import { PrismaClient } from "@prisma/client";
-import { categorias } from "./data/categorias";
-import { productos } from "./data/productos";
+import { products } from "./data/products";
+import { categories } from "./data/categories";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
 
-const main = async () :Promise<void>  => {
+const main = async () : Promise<void> => {
     try {
-        await prisma.categoria.createMany({
-            data: categorias
+        await prisma.category.createMany({
+            data: categories
         })
-        await prisma.producto.createMany({
-            data: productos
+        await prisma.product.createMany({
+            data: products
         })
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
-
 main()

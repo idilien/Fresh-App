@@ -1,11 +1,14 @@
-import Head from "next/head"
-import Modal from "react-modal"
-import { ToastContainer } from "react-toastify";
-import ModalProductos from "../components/modalProductos";
-import Siderbar from "../components/Siderbar"
-import useQuiosco from "../hooks/useQuiosco";
+
+import Head from 'next/head'
+import Modal from 'react-modal'
+import { ToastContainer } from 'react-toastify';
+
+import ModalProduct from '../components/ModalProduct';
+import Sidebar from '../components/Sidebar'
+import Steps from '../components/Steps';
+import useRestaurant from '../hooks/useRestaurant';
+
 import 'react-toastify/dist/ReactToastify.css';
-import Pasos from "../components/Pasos";
 
 
 const customStyles = {
@@ -18,43 +21,54 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
+
 Modal.setAppElement('#__next');
 
-export default function Layout({children,pagina}) {
+export default function Layout ({children, page}) {
 
-  const {modal}= useQuiosco()
+const {modal} =  useRestaurant()
 
-    return (
-      <>
-        <Head>
-                <title>Fresh - {pagina}</title>
-                <meta name="description" content="Quiosco Cafetería"/>
-        </Head>
-
-        <div className="md:flex">
-            <aside className="w-full md:w-4/12 xl:w-1/4 2xl:w-1/5">
-            <div className="mt-10 mx-5">
-                   <Siderbar/>
-            </div>
-            </aside>
-            <main className="md:w-8/12 xl:w-3/4 h-screen overflow-y-scroll">
-              <div className=" mt-2">
-                  <Pasos/>
-                   {children}
+  return (
+    <> 
+            <Head>
+                <title>Fenicia- {page}</title>
+                <meta name='description' content='Lybanes'/> 
+            </Head>
+            <div className='container m-auto'>
+              <div className='md:flex'>
+                      <aside className='md:w-4/12 xl:w-1/4 2xl:w-1/5'>
+                          <Sidebar/>
+                      </aside>
+                      <main className='md-w-8/12 xl:w-3/4 2xl:w-4/5 h-screen overflow-y-auto'>
+                            <Steps/>
+                          <h1 className= "mt-7 text-5xl text-center font-black text-red-900">Pedidos Online</h1>
+                          <div className=' p-6 text-center'>
+                            {children}
+                          </div>                
+                      </main>
               </div>
-            </main>
-        </div>
-        {modal && (
-          <Modal
-            isOpen={modal}
-            style={customStyles}
-          >
-            <ModalProductos/>
-          </Modal>
-        )}
+              {modal && (
+                <Modal
+                  isOpen={modal}
+                  style={customStyles}
+                >
+                  <ModalProduct/>
 
-        <ToastContainer/>
-      </>
-      
-    )
-  }
+                </Modal>
+              )}
+            </div>
+                <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                />
+    </>
+  )
+}

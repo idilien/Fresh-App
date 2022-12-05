@@ -10,27 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Producto{
+model Product {
   id Int @id @default(autoincrement())
-  nombre String
-  precio Float
-  imagen String
-  categoria Categoria @relation(fields: [categoriaId], references: [id])
-  categoriaId Int
-
+  name String
+  price Float
+  image String
+  category Category @relation(fields: [categoryId] , references: [id])
+  categoryId Int
 }
 
-model Categoria{
+model Category {
   id Int @id @default(autoincrement())
-  nombre String
-  icono String
-  productos Producto[]
+  name String
+  icon String
+  product Product[] 
 }
 
-model Orden{
-   id Int @id @default(autoincrement())
-   nombre String
-   fecha String
-   total Float
-   pedido Json
+model Order {
+  id Int @id @default(autoincrement())
+  name String
+  date String
+  total Float
+  order Json
 }
